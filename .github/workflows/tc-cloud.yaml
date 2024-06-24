@@ -1,0 +1,32 @@
+name: Run Test on PR
+on: pull_request
+
+jobs:
+  gradle:
+    strategy:
+      matrix:
+        # TODO: implement matrix for TC
+        #os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      TC_CLOUD_TOKEN: ${{ secrets.TC_CLOUD_TOKEN }}
+    steps:
+      - name: Prepare Testcontainers Cloud agent
+        if: env.TC_CLOUD_TOKEN != ''
+        run: |
+          curl -L -o agent https://app.testcontainers.cloud/download/testcontainers-cloud-agent_linux_x86-64
+          chmod +x agent
+          ./agent &
+          ./agent wait
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: liberica
+          java-version: 11
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        run: ./gradlew test

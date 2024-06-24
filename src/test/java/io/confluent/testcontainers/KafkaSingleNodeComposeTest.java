@@ -18,7 +18,8 @@ public class KafkaSingleNodeComposeTest {
   public static DockerComposeContainer environment =
       new DockerComposeContainer<>(new File("src/test/resources/kafka-single-node-compose.yml"))
           .withExposedService("kafka_1", 29092)
-          .withExposedService("zookeeper_1", 32181);
+          .withExposedService("zookeeper_1", 32181)
+          .withLocalCompose(true);
 
 
   @Test

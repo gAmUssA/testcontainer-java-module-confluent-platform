@@ -74,7 +74,7 @@ dependencies {
   testImplementation("io.confluent.ksql:ksqldb-rest-model:5.5.1") {
     exclude group: 'org.slf4j', module: 'slf4j-log4j12'
   }
-  testImplementation("io.confluent.ksql:ksqldb-rest-client:5.5.1") {
+  testImplementation("io.confluent.ksql:ksqldb-rest-client:6.2.0") {
     exclude group: 'org.slf4j', module: 'slf4j-log4j12'
   }
 
